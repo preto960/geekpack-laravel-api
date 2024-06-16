@@ -28,10 +28,12 @@ class ApiServiceProvider extends ServiceProvider
     protected function registerDynamicRoutes()
     {
         // Registrar rutas dinámicamente desde la base de datos
-        $routes = ApiRoute::all();
+        if (Schema::hasTable('api_routes')) {
+            $routes = ApiRoute::all();
 
-        foreach ($routes as $route) {
-            Route::{$route->type}($route->route, [$route->controller, $route->class])->name($route->name);
+            foreach ($routes as $route) {
+                Route::{$route->type}($route->route, [$route->controller, $route->class])->name($route->name);
+            }
         }
     }
 }
