@@ -5,7 +5,8 @@ namespace Geekpack\Api;
 use Illuminate\Support\ServiceProvider;
 use Geekpack\Api\Models\ApiRoute;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Schema; // Asegúrate de añadir esta línea
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Seeder;
 
 class ApiServiceProvider extends ServiceProvider
 {
@@ -22,6 +23,7 @@ class ApiServiceProvider extends ServiceProvider
         ]);
 
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        $this->loadSeedersFrom(__DIR__.'/../database/seeders');
 
         $this->registerDynamicRoutes();
     }
@@ -37,4 +39,12 @@ class ApiServiceProvider extends ServiceProvider
             }
         }
     }
+
+    protected function loadSeedersFrom($path)
+    {
+        foreach (glob($path . '/*.php') as $filename) {
+            require_once($filename);
+        }
+    }
 }
+
