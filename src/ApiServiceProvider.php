@@ -14,6 +14,7 @@ class ApiServiceProvider extends ServiceProvider
     {
         // Register the middleware
         $this->app['router']->aliasMiddleware('valid.api.route', \Geekpack\Api\Http\Middleware\EnsureApiRouteIsValid::class);
+        $this->app['router']->aliasMiddleware('auth:sanctum', \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class);
     }
 
     public function boot()
