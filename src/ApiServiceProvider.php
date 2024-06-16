@@ -6,7 +6,6 @@ use Illuminate\Support\ServiceProvider;
 use Geekpack\Api\Models\ApiRoute;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Seeder;
 
 class ApiServiceProvider extends ServiceProvider
 {
@@ -38,7 +37,8 @@ class ApiServiceProvider extends ServiceProvider
             $routes = ApiRoute::all();
 
             foreach ($routes as $route) {
-                $middleware = array_merge(['api', 'valid.api.route'], explode(',', $route->middleware));
+                $additionalMiddlewares = $route->middleware ? explode(',', $route->middleware) : [];
+                $middleware = array_merge(['api', 'valid.api.route'], $additionalMiddlewares);
 
                 Route::middleware($middleware) // Aplica los middlewares
                     ->{$route->type}($route->route, [$route->controller, $route->class])
