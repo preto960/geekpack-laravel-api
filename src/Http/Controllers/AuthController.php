@@ -8,8 +8,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Password;
-use App\Http\Controllers\Controller;
+use Illuminate\Auth\Events\Registered;
 use Geekpack\Api\Notifications\ResetPasswordNotification;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Auth\Events\Verified;
+use App\Http\Controllers\Controller;
 
 class AuthController extends Controller
 {
@@ -25,13 +28,15 @@ class AuthController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        User::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
 
-        return response()->json(['message' => 'User successfully registered'], 201);
+        event(new Registered($user));
+
+        return response()->json(['message' => 'Registration successful. Please check your email to verify your account.'], 201);
     }
 
     public function login(Request $request)
@@ -117,6 +122,37 @@ class AuthController extends Controller
         }
 
         return response()->json(['message' => 'Unable to reset password'], 500);
+    }
+
+    public function emailVerificationNotice()
+    {
+        return response()->json(['message' => 'Email verification required'], 403);
+    }
+
+    public function verify(Request $request)
+    {
+        $user = Auth::user();
+
+        if ($user->hasVerifiedEmail()) {
+            return response()->json(['message' => 'Email already verified.'], 200);
+        }
+
+        if ($user->markEmailAsVerified()) {
+            event(new Verified($user));
+        }
+
+        return response()->json(['message' => 'Email has been verified.'], 200);
+    }
+
+    public function resendVerificationEmail(Request $request)
+    {
+        if ($request->user()->hasVerifiedEmail()) {
+            return response()->json(['message' => 'Email already verified.'], 200);
+        }
+
+        $request->user()->sendEmailVerificationNotification();
+
+        return response()->json(['message' => 'Verification email resent.'], 200);
     }
 
 }
