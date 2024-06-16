@@ -16,6 +16,12 @@ class ResetPasswordNotification extends Notification
         $this->token = $token;
     }
 
+    // Define the delivery channels for the notification
+    public function via($notifiable)
+    {
+        return ['mail'];
+    }
+
     public function toMail($notifiable)
     {
         $url = $this->resetUrl($notifiable);
@@ -30,7 +36,7 @@ class ResetPasswordNotification extends Notification
     protected function resetUrl($notifiable)
     {
         return URL::temporarySignedRoute(
-            'api.password.reset', // Asegúrate de definir esta ruta en tu archivo de rutas API
+            'api.password.update', // Make sure this route is defined in your API routes file
             Carbon::now()->addMinutes(60),
             ['token' => $this->token, 'email' => $notifiable->getEmailForPasswordReset()]
         );
