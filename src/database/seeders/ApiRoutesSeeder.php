@@ -1,5 +1,7 @@
 <?php
 
+namespace Geekpack\Api\Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use Geekpack\Api\Models\ApiRoute;
 
