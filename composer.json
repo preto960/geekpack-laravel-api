@@ -27,9 +27,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Geekpack\\Api\\ApiServiceProvider"
+                "Geekpack\\Api\\ApiServiceProvider",
+                "Laravel\\Sanctum\\SanctumServiceProvider"
             ]
         }
     },
-    "version": "0.3.3"
+    "version": "0.3.4"
 }

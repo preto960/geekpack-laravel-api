@@ -24,8 +24,13 @@ class ApiServiceProvider extends ServiceProvider
             __DIR__.'/../config/auth.php' => config_path('auth.php'),
         ]);
 
-        $this->loadMigrationsFrom(__DIR__.'/database/migrations');
-        $this->loadSeedersFrom(__DIR__.'/database/seeders');
+        $this->loadMigrationsFrom(__DIR__.'/Database/migrations');
+
+        $this->publishes([
+            __DIR__.'/../../vendor/laravel/sanctum/Database/migrations/' => database_path('migrations'),
+        ], 'sanctum-migrations');
+
+        $this->loadSeedersFrom(__DIR__.'/Database/Seeders');
 
         $this->registerDynamicRoutes();
     }
