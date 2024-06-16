@@ -35,7 +35,9 @@ class ApiServiceProvider extends ServiceProvider
             $routes = ApiRoute::all();
 
             foreach ($routes as $route) {
-                Route::middleware(['api', 'valid.api.route']) // Aplica el middleware
+                $middleware = array_merge(['api', 'valid.api.route'], explode(',', $route->middleware));
+
+                Route::middleware($middleware) // Aplica los middlewares
                     ->{$route->type}($route->route, [$route->controller, $route->class])
                     ->name($route->name);
             }

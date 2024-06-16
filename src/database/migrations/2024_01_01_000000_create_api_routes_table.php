@@ -15,6 +15,7 @@ class CreateApiRoutesTable extends Migration
             $table->string('controller'); // Controlador
             $table->string('class'); // Clase del controlador
             $table->string('name')->nullable(); // Nombre de la ruta
+            $table->string('middleware')->nullable(); // Middleware
             $table->timestamps();
         });
     }
