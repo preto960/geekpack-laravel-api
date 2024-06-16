@@ -63,7 +63,7 @@ class AuthController extends Controller
         return response()->json(['message' => 'Successfully logged out'], 200);
     }
 
-    public function forgotPassword(Request $request)
+    /* public function forgotPassword(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required|string|email',
@@ -82,6 +82,6 @@ class AuthController extends Controller
         }
 
         return response()->json(['message' => 'Unable to send password reset link'], 500);
-    }
+    } */
 
 }
