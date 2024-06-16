@@ -22,8 +22,8 @@ class ApiServiceProvider extends ServiceProvider
             __DIR__.'/../config/sanctum.php' => config_path('sanctum.php'),
         ]);
 
-        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-        $this->loadSeedersFrom(__DIR__.'/../database/seeders');
+        $this->loadMigrationsFrom(__DIR__.'/database/migrations');
+        $this->loadSeedersFrom(__DIR__.'/database/seeders');
 
         $this->registerDynamicRoutes();
     }
