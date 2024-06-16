@@ -35,8 +35,7 @@ class ApiServiceProvider extends ServiceProvider
             $routes = ApiRoute::all();
 
             foreach ($routes as $route) {
-                Route::prefix('api') // Asegúrate de que las rutas usen el prefijo /api
-                    ->middleware(['api', 'valid.api.route']) // Aplica el middleware
+                Route::middleware(['api', 'valid.api.route']) // Aplica el middleware
                     ->{$route->type}($route->route, [$route->controller, $route->class])
                     ->name($route->name);
             }
