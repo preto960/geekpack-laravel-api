@@ -5,6 +5,7 @@ namespace Geekpack\Api;
 use Illuminate\Support\ServiceProvider;
 use Geekpack\Api\Models\ApiRoute;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Schema; // Asegúrate de añadir esta línea
 
 class ApiServiceProvider extends ServiceProvider
 {
