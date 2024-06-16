@@ -26,9 +26,11 @@ class ApiServiceProvider extends ServiceProvider
 
         $this->loadMigrationsFrom(__DIR__.'/Database/migrations');
 
-        $this->publishes([
-            __DIR__.'/../../vendor/laravel/sanctum/Database/migrations/' => database_path('migrations'),
-        ], 'sanctum-migrations');
+        $this->callAfterResolving('migrator', function () {
+            $this->publishes([
+                __DIR__.'/../../vendor/laravel/sanctum/database/migrations/' => database_path('migrations'),
+            ], 'sanctum-migrations');
+        });
 
         $this->loadSeedersFrom(__DIR__.'/Database/Seeders');
 
