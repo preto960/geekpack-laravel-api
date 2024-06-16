@@ -25,15 +25,13 @@ class AuthController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        $user = User::create([
+        User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
 
-        $token = $user->createToken('auth_token')->plainTextToken;
-
-        return response()->json(['access_token' => $token, 'token_type' => 'Bearer'], 201);
+        return response()->json(['message' => 'User successfully registered'], 201);
     }
 
     public function login(Request $request)
