@@ -4,17 +4,16 @@ namespace Geekpack\Api\Listeners;
 
 use Geekpack\Api\Events\Registered;
 use Geekpack\Api\Notifications\VerifyEmailNotification;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Log;
 
-class SendEmailVerificationNotification implements ShouldQueue
+class SendEmailVerificationNotification
 {
     public function handle(Registered $event)
     {
-        $user = $event->user;
+        Log::info('Handle method in SendEmailVerificationNotification called', ['user' => $event->user->email]);
 
-        Log::info("Sending email verification to user: {$user->email}");
+        $event->user->notify(new VerifyEmailNotification());
 
-        $user->notify(new VerifyEmailNotification());
+        Log::info('Verification email notification sent', ['user' => $event->user->email]);
     }
 }

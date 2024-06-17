@@ -5,9 +5,6 @@ namespace Geekpack\Api\Notifications;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\URL;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Config;
 
 class VerifyEmailNotification extends Notification
 {
@@ -18,9 +15,12 @@ class VerifyEmailNotification extends Notification
 
     public function toMail($notifiable)
     {
-        $verificationUrl = $this->verificationUrl($notifiable);
+        $verificationUrl = url('/api/email/verify/'.$notifiable->id.'/'.sha1($notifiable->email));
 
-        Log::info("Verification email sent to: {$notifiable->email} with URL: $verificationUrl");
+        Log::info('Preparing to send email verification', [
+            'to' => $notifiable->email,
+            'verificationUrl' => $verificationUrl,
+        ]);
 
         return (new MailMessage)
             ->subject('Verify Email Address')
@@ -29,12 +29,13 @@ class VerifyEmailNotification extends Notification
             ->line('If you did not create an account, no further action is required.');
     }
 
-    protected function verificationUrl($notifiable)
+    public function toLog($notifiable)
     {
-        return URL::temporarySignedRoute(
-            'verification.verify', 
-            Carbon::now()->addMinutes(Config::get('auth.verification.expire', 60)), 
-            ['id' => $notifiable->getKey(), 'hash' => sha1($notifiable->getEmailForVerification())]
-        );
+        $verificationUrl = url('/api/email/verify/'.$notifiable->id.'/'.sha1($notifiable->email));
+
+        Log::info('Logging email verification details', [
+            'to' => $notifiable->email,
+            'verificationUrl' => $verificationUrl,
+        ]);
     }
 }
