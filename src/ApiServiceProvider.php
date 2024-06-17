@@ -21,13 +21,36 @@ class ApiServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        $this->publishes([
+        /* $this->publishes([
             __DIR__.'/../config/sanctum.php' => config_path('sanctum.php'),
             __DIR__.'/../config/mail.php' => config_path('mail.php'),
             __DIR__.'/../config/auth.php' => config_path('auth.php'),
             __DIR__.'/../Events/Registered.php' => app_path('Events/Registered.php'),
             __DIR__.'/../Listeners/SendEmailVerificationNotification.php' => app_path('Listeners/SendEmailVerificationNotification.php'),
-        ], 'geekpack-api');
+        ]); */
+
+        $this->publishes([
+            __DIR__.'/../config/sanctum.php' => config_path('sanctum.php'),
+            __DIR__.'/../config/mail.php' => config_path('mail.php'),
+            __DIR__.'/../config/auth.php' => config_path('auth.php'),
+        ], 'config');
+
+        $this->publishes([
+            __DIR__.'/Database/migrations/' => database_path('migrations'),
+        ], 'migrations');
+
+        $this->publishes([
+            __DIR__.'/Database/seeders/' => database_path('seeders'),
+        ], 'seeders');
+
+        $this->publishes([
+            __DIR__.'/Events' => app_path('Events'),
+        ], 'events');
+
+        $this->publishes([
+            __DIR__.'/Listeners' => app_path('Listeners'),
+        ], 'listeners');
+
 
         $this->loadMigrationsFrom(__DIR__.'/Database/migrations');
         $this->loadSeedersFrom(__DIR__.'/Database/Seeders');

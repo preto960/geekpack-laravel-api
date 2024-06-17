@@ -8,9 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Password;
-use Illuminate\Auth\Events\Registered;
-use Geekpack\Api\Notifications\ResetPasswordNotification;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Support\Facades\Event;
+use Geekpack\Api\Events\Registered;
 use Illuminate\Auth\Events\Verified;
 use App\Http\Controllers\Controller;
 
@@ -34,7 +33,7 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        event(new Registered($user));
+        Event::dispatch(new Registered($user));
 
         return response()->json(['message' => 'Registration successful. Please check your email to verify your account.'], 201);
     }
@@ -154,5 +153,4 @@ class AuthController extends Controller
 
         return response()->json(['message' => 'Verification email resent.'], 200);
     }
-
 }
