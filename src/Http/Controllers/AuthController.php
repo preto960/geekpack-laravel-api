@@ -54,10 +54,16 @@ class AuthController extends Controller
         }
 
         $user = User::where('email', $request['email'])->firstOrFail();
+
+        if (!$user->hasVerifiedEmail()) {
+            return response()->json(['message' => 'Email not verified.'], 403);
+        }
+
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json(['access_token' => $token, 'token_type' => 'Bearer'], 200);
     }
+
 
     public function logout(Request $request)
     {
