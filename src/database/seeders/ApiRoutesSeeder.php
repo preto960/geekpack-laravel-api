@@ -18,7 +18,6 @@ class ApiRoutesSeeder extends Seeder
             ['type' => 'get', 'route' => 'api/email/verify', 'controller' => 'Geekpack\Api\Http\Controllers\AuthController', 'class' => 'emailVerificationNotice', 'name' => 'verification.notice', 'middleware' => 'auth:sanctum'],
             ['type' => 'get', 'route' => 'api/email/verify/{id}/{hash}', 'controller' => 'Geekpack\Api\Http\Controllers\AuthController', 'class' => 'verify', 'name' => 'verification.verify', 'middleware' => 'auth:sanctum,signed'],
             ['type' => 'post', 'route' => 'api/email/resend', 'controller' => 'Geekpack\Api\Http\Controllers\AuthController', 'class' => 'resendVerificationEmail', 'name' => 'verification.send', 'middleware' => 'auth:sanctum'],
-            ['type' => 'get', 'route' => 'api/protected-route', 'controller' => 'Geekpack\Api\Http\Controllers\SomeController', 'class' => 'someMethod', 'name' => 'protected.route', 'middleware' => 'auth:sanctum,verified'],
         ];
 
         foreach ($routes as $route) {

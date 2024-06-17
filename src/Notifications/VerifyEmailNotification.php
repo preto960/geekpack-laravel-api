@@ -20,7 +20,6 @@ class VerifyEmailNotification extends Notification
     {
         $verificationUrl = $this->verificationUrl($notifiable);
 
-        // Log the verification URL
         Log::info("Verification email sent to: {$notifiable->email} with URL: $verificationUrl");
 
         return (new MailMessage)

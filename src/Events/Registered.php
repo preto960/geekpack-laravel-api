@@ -1,20 +1,19 @@
 <?php
 
-namespace Geekpack\Api\Listeners;
+namespace Geekpack\Api\Events;
 
-use Geekpack\Api\Events\Registered;
-use Geekpack\Api\Notifications\VerifyEmailNotification;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Queue\SerializesModels;
+use App\Models\User;
 
-class SendEmailVerificationNotification
+class Registered
 {
-    public function handle(Registered $event)
+    use Dispatchable, SerializesModels;
+
+    public $user;
+
+    public function __construct(User $user)
     {
-        $user = $event->user;
-
-        // Log that the notification is being sent
-        Log::info("Sending email verification to user: {$user->email}");
-
-        $user->notify(new VerifyEmailNotification());
+        $this->user = $user;
     }
 }

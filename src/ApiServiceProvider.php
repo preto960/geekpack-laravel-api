@@ -6,6 +6,8 @@ use Illuminate\Support\ServiceProvider;
 use Geekpack\Api\Models\ApiRoute;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
+use Geekpack\Api\Events\Registered;
+use Geekpack\Api\Listeners\SendEmailVerificationNotification;
 
 class ApiServiceProvider extends ServiceProvider
 {
@@ -21,13 +23,6 @@ class ApiServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        /* $this->publishes([
-            __DIR__.'/../config/sanctum.php' => config_path('sanctum.php'),
-            __DIR__.'/../config/mail.php' => config_path('mail.php'),
-            __DIR__.'/../config/auth.php' => config_path('auth.php'),
-            __DIR__.'/../Events/Registered.php' => app_path('Events/Registered.php'),
-            __DIR__.'/../Listeners/SendEmailVerificationNotification.php' => app_path('Listeners/SendEmailVerificationNotification.php'),
-        ]); */
 
         $this->publishes([
             __DIR__.'/../config/sanctum.php' => config_path('sanctum.php'),
@@ -85,9 +80,9 @@ class ApiServiceProvider extends ServiceProvider
 
     protected function registerEvents()
     {
-        $this->app['events']->listen(
-            \Geekpack\Api\Events\Registered::class,
-            \Geekpack\Api\Listeners\SendEmailVerificationNotification::class
+        \Event::listen(
+            Registered::class,
+            [SendEmailVerificationNotification::class, 'handle']
         );
     }
 }
