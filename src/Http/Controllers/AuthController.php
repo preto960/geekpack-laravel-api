@@ -136,8 +136,15 @@ class AuthController extends Controller
 
     public function verify(Request $request)
     {
-        $userId = $request->route('id');
-        $user = User::findOrFail($userId);
+        $user = User::findOrFail($request->route('id'));
+
+        if (! hash_equals((string) $request->route('id'), (string) $user->getKey())) {
+            throw new AuthorizationException;
+        }
+
+        if (! hash_equals((string) $request->route('hash'), sha1($user->getEmailForVerification()))) {
+            throw new AuthorizationException;
+        }
 
         if ($user->hasVerifiedEmail()) {
             return response()->json(['message' => 'Email already verified.'], 200);
@@ -149,6 +156,7 @@ class AuthController extends Controller
 
         return response()->json(['message' => 'Email has been verified.'], 200);
     }
+
 
 
     public function resendVerificationEmail(Request $request)
