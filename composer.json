@@ -1,6 +1,6 @@
 {
     "name": "geekpack/laravel-api",
-    "description": "Paquete para manejar autenticación con Sanctum usando API routes en Laravel",
+    "description": "package only for the project to use api routes dynamically from the database together with sanctum",
     "license": "MIT",
     "keywords": [
         "geekpack",
@@ -32,5 +32,5 @@
             ]
         }
     },
-    "version": "0.5.1"
+    "version": "0.5.2"
 }
