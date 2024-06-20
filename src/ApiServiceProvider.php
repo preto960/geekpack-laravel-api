@@ -15,8 +15,8 @@ class ApiServiceProvider extends ServiceProvider
     {
         $this->app['router']->aliasMiddleware('valid.api.route', \Geekpack\Api\Http\Middleware\EnsureApiRouteIsValid::class);
         $this->app['router']->aliasMiddleware('auth:sanctum', \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class);
-        $this->app['router']->aliasMiddleware('verified', \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class);
-        $this->app['router']->aliasMiddleware('signed', \Illuminate\Routing\Middleware\ValidateSignature::class);
+        /* $this->app['router']->aliasMiddleware('verified', \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class); */
+        /* $this->app['router']->aliasMiddleware('signed', \Illuminate\Routing\Middleware\ValidateSignature::class); */
     }
 
     public function boot()
@@ -32,18 +32,18 @@ class ApiServiceProvider extends ServiceProvider
             __DIR__.'/Database/migrations/' => database_path('migrations'),
         ], 'migrations');
 
-        $this->publishes([
+        /* $this->publishes([
             __DIR__.'/Database/seeders/' => database_path('seeders'),
-        ], 'seeders');
+        ], 'seeders'); */
 
 
         $this->loadMigrationsFrom(__DIR__.'/Database/migrations');
-        $this->loadSeedersFrom(__DIR__.'/Database/Seeders');
+        /* $this->loadSeedersFrom(__DIR__.'/Database/Seeders'); */
 
-        \Illuminate\Support\Facades\Event::listen(
+        /* \Illuminate\Support\Facades\Event::listen(
             \Geekpack\Api\Events\Registered::class,
             \Geekpack\Api\Listeners\SendEmailVerificationNotification::class,
-        );
+        ); */
 
         $this->registerDynamicRoutes();
     }
@@ -66,11 +66,11 @@ class ApiServiceProvider extends ServiceProvider
     }
 
 
-    protected function loadSeedersFrom($path)
+    /* protected function loadSeedersFrom($path)
     {
         foreach (glob($path . '/*.php') as $filename) {
             require_once($filename);
         }
-    }
+    } */
 }
 
