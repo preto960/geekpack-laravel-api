@@ -15,6 +15,16 @@ class ApiServiceProvider extends ServiceProvider
     {
         $this->app['router']->aliasMiddleware('valid.api.route', \Geekpack\Api\Http\Middleware\EnsureApiRouteIsValid::class);
         $this->app['router']->aliasMiddleware('auth:sanctum', \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class);
+
+        $this->mergeConfigFrom(
+            __DIR__.'/../config/auth.php',
+            'auth'
+        );
+
+        $this->mergeConfigFrom(
+            __DIR__.'/../config/sanctum.php',
+            'sanctum'
+        );
     }
 
     public function boot()
@@ -23,7 +33,6 @@ class ApiServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../config/sanctum.php' => config_path('sanctum.php'),
             __DIR__.'/../config/auth.php' => config_path('auth.php'),
-            __DIR__.'/../config/inertia.php' => config_path('inertia.php'),
         ], 'config');
 
         $this->publishes([
