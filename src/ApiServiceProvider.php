@@ -24,7 +24,6 @@ class ApiServiceProvider extends ServiceProvider
 
         $this->publishes([
             __DIR__.'/../config/sanctum.php' => config_path('sanctum.php'),
-            __DIR__.'/../config/mail.php' => config_path('mail.php'),
             __DIR__.'/../config/auth.php' => config_path('auth.php'),
         ], 'config');
 
