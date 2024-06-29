@@ -24,7 +24,7 @@
             "Geekpack\\Api\\": "src/"
         },
         "files": [
-            "Geekpack\\Api\\Helpers\\ApiFunctions.php"
+            "Helpers\\ApiFunctions.php"
         ]
     },
     "extra": {
@@ -35,5 +35,5 @@
             ]
         }
     },
-    "version": "0.5.65"
+    "version": "0.5.66"
 }
