@@ -10,13 +10,13 @@ class CreateApiRoutesTable extends Migration
     {
         Schema::create('api_routes', function (Blueprint $table) {
             $table->id();
-            $table->string('type'); // Tipo de ruta (GET, POST, etc.)
-            $table->string('route'); // Ruta
-            $table->string('controller')->nullable(); // Controlador
-            $table->string('class')->nullable(); // Clase del controlador
-            $table->string('name')->nullable(); // Nombre de la ruta
+            $table->string('type');
+            $table->string('route');
+            $table->string('controller')->nullable();
+            $table->string('class')->nullable();
             $table->string('functions')->nullable();
-            $table->string('middleware')->nullable(); // Middleware
+            $table->string('name')->nullable();
+            $table->string('middleware')->nullable();
             $table->timestamps();
         });
     }
