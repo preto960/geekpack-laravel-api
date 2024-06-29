@@ -54,33 +54,9 @@ class ApiServiceProvider extends ServiceProvider
                 $additionalMiddlewares = $route->middleware ? explode(',', $route->middleware) : [];
                 $middleware = array_merge(['api', 'valid.api.route'], $additionalMiddlewares);
 
-                if ($route->function) {
-                    // Si 'function' es una cadena ejecutable, evalúala
-                    if (is_string($route->function)) {
-                        Route::middleware($middleware)
-                            ->{$route->type}($route->route, function() use ($route) {
-                                try {
-                                    $result = eval($route->function);
-    
-                                    // Asegúrate de manejar el resultado de manera adecuada
-                                    return $result;
-                                } catch (\Throwable $e) {
-                                    return response()->json(['error' => 'Error executing dynamic function'], 500);
-                                }
-                            })
-                            ->name($route->name);
-                    } elseif (is_callable($route->function)) {
-                        // Si 'function' es un nombre de función válida
-                        Route::middleware($middleware)
-                            ->{$route->type}($route->route, $route->function)
-                            ->name($route->name);
-                    }
-                } else {
-                    // Si no se especifica una función, maneja según el controlador/clase
-                    Route::middleware($middleware)
-                        ->{$route->type}($route->route, [$route->controller, $route->class])
-                        ->name($route->name);
-                }
+                Route::middleware($middleware) // Aplica los middlewares
+                    ->{$route->type}($route->route, [$route->controller, $route->class])
+                    ->name($route->name);
             }
         }
     }
