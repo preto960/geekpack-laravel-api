@@ -54,13 +54,19 @@ class ApiServiceProvider extends ServiceProvider
                 $additionalMiddlewares = $route->middleware ? explode(',', $route->middleware) : [];
                 $middleware = array_merge(['api', 'valid.api.route'], $additionalMiddlewares);
 
-                if($route->functions != null){
-                    Route::middleware($middleware) // Aplica los middlewares
-                        ->{$route->type}($route->route, [$route->controller, $route->class])
+                if ($route->function) {
+                    Route::middleware($middleware)
+                        ->{$route->type}($route->route, function() use ($route) {
+                            if (function_exists($route->function)) {
+                                return call_user_func($route->function);
+                            } else {
+                                return response()->json(['error' => 'Function ' . $route->function . ' does not exist'], 404);
+                            }
+                        })
                         ->name($route->name);
-                }else{
-                    Route::middleware($middleware) // Aplica los middlewares
-                        ->{$route->type}($route->route, function () { $route->functions; })
+                } else {
+                    Route::middleware($middleware)
+                        ->{$route->type}($route->route, [$route->controller, $route->class])
                         ->name($route->name);
                 }
             }
