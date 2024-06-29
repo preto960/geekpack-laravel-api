@@ -14,7 +14,7 @@ class CreateApiRoutesTable extends Migration
             $table->string('route');
             $table->string('controller')->nullable();
             $table->string('class')->nullable();
-            $table->string('functions')->nullable();
+            $table->string('function')->nullable();
             $table->string('name')->nullable();
             $table->string('middleware')->nullable();
             $table->timestamps();

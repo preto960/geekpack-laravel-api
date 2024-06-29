@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class ApiRoute extends Model
 {
-    protected $fillable = ['type', 'route', 'controller', 'class', 'name', 'middleware', 'functions'];
+    protected $fillable = ['type', 'route', 'controller', 'class', 'name', 'middleware', 'function'];
 }
