@@ -22,7 +22,10 @@
     "autoload": {
         "psr-4": {
             "Geekpack\\Api\\": "src/"
-        }
+        },
+        "files": [
+            "Geekpack\\Api\\Helpers\\ApiFunctions.php"
+        ]
     },
     "extra": {
         "laravel": {
@@ -32,5 +35,5 @@
             ]
         }
     },
-    "version": "0.5.64"
+    "version": "0.5.65"
 }

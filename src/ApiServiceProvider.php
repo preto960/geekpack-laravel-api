@@ -39,10 +39,6 @@ class ApiServiceProvider extends ServiceProvider
             __DIR__.'/Database/migrations/' => database_path('migrations'),
         ], 'migrations');
 
-        $this->publishes([
-            __DIR__.'/Helpers/ApiFunctions.php' => app_path('Helpers/ApiFunctions.php'),
-        ], 'helpers');  
-
         $this->loadMigrationsFrom(__DIR__.'/Database/migrations');
 
         $this->registerDynamicRoutes();
