@@ -39,6 +39,13 @@ return [
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
+            'expire' => 60,
+        ],
+
+        'api' => [
+            'driver' => 'token',
+            'provider' => 'users',
+            'hash' => false,
         ],
     ],
 
