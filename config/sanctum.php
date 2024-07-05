@@ -30,7 +30,8 @@ return [
     |
     */
 
-    'expiration' => null,
+    'expiration' => 60,
+    'personal_access_token_expires_in' => 60,
 
     /*
     |--------------------------------------------------------------------------
