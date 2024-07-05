@@ -15,8 +15,13 @@ class EnsureApiRouteIsValid
         $method = $request->method();
 
         $routeBase = explode('/', $route);
-        $routeBase = array_slice($routeBase, 0, 3); // Ajusta esto según la estructura de tus rutas
-        $routeBase = implode('/', $routeBase);
+        if($routeBase[0] == 'api'){
+            $routeBase = array_slice($routeBase, 0, 3);
+            $routeBase = implode('/', $routeBase);
+        }else{
+            $routeBase = array_slice($routeBase, 0, 1);
+            $routeBase = implode('/', $routeBase);
+        }
 
         $apiRoute = ApiRoute::where('route', 'LIKE', $routeBase . '%')
                             ->where('type', $method)
