@@ -1,6 +1,6 @@
 {
     "name": "geekpack/laravel-api",
-    "description": "package only for the project to use api routes dynamically from the database together with sanctum",
+    "description": "Package to use API routes dynamically from the database with Sanctum.",
     "license": "MIT",
     "keywords": [
         "geekpack",
@@ -27,8 +27,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Geekpack\\Api\\ApiServiceProvider",
-                "Laravel\\Sanctum\\SanctumServiceProvider"
+                "Geekpack\\Api\\ApiServiceProvider"
             ]
         }
     },
